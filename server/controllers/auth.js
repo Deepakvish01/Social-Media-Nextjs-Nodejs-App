@@ -61,7 +61,7 @@ export const updatePassword = async (req, res) => {
 export const checkLogin = async (req, res) => {
     try {
         const { token } = req.body;
-        const verified = await jwt.verify(token, process.env.SECRET);
+        await jwt.verify(token, process.env.SECRET);
         res.send({ msg: "Token Valid" })
     } catch (error) {
         console.log(error);
