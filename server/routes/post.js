@@ -4,7 +4,7 @@ import { authenticator } from "../middlewares/authenticatior.js";
 const postRouter = express.Router();
 
 postRouter.get("/getPosts", authenticator, getPosts);
-postRouter.get("/commentDetails/:_id",commentDetails)
+postRouter.get("/commentDetails/:_id",authenticator,commentDetails)
 postRouter.post("/createPost", authenticator, createPost);
 postRouter.put("/updatePost/:_id", authenticator, updatePost);
 postRouter.delete("/deletePost/:_id", authenticator, deletePost);

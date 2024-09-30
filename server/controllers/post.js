@@ -94,10 +94,11 @@ export const addComments = async (req, res) => {
 
 export const commentDetails = async (req, res) => {
     try {
-        const query = User.findById(req.user.id);
+        const { _id } = req.params;
+        const query = User.findById({ _id: _id });
         query.select("firstname lastname profilePicture");
         const commentsDetails = await query.exec();
-        await Comment.updateOne({_id:req.params._id},{$push:{comments:commentsDetails._id}})
+        await Comment.updateOne({id:req.user.id},{$push:{comments:commentsDetails._id}})
         res.send("Comment Details Added")
     } catch (error) {
         console.log(error);
