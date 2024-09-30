@@ -13,14 +13,12 @@ const commentSchema = new Schema({
     },
     firstname:{
         type:String
-    }
-    ,
+    },
     lastname: {
-        type: String
-    }
-    ,
+        type:String
+    },
     profilePicture: {
-        type: String
+        type:String
     }
 })
 

@@ -81,17 +81,16 @@ export const likePost = async (req, res) => {
 
 export const addComments = async (req, res) => {
     try {
-        const { _id } = req.params;
-        const query = User.findById({ _id: _id });
-        query.select("firstname lastname profilePicture");
-        const commentsDetails = await query.exec();
-        console.log(commentsDetails);
-        // const { text } = req.body;
-        // const creator = req.user.id;
-        // const raw = new Comment({ text, creator})
-        // const addedComment = await raw.save();
-        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
-        // res.send("Comment Added")
+        const { text } = req.body;
+        const creator = await User.findById(req.user.id)
+        console.log(creator);
+        // const user = await User.findById(req.user.id)
+        // console.log(user);
+        
+        const raw = new Comment({ text, creator:creator.firstname })
+        const addedComment = await raw.save();
+        await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
+        res.send("Comment Added")
     } catch (error) {
         console.log(error);
     }

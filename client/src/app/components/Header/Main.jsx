@@ -4,7 +4,6 @@ import React, { useContext } from 'react'
 import { imageURL } from '../Profile/EdtiProfile';
 
 const Header = ({user}) => {
-  console.log(user);
   const router = useRouter();
   const { dispatch } = useContext(AuthContext)
   function logOut() {
