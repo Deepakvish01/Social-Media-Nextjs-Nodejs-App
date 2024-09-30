@@ -35,5 +35,5 @@ app.use('/user',userRouter );
 // SETUP FOR SERVER
 const port = process.env.PORT
 app.listen(port, () => {
-    console.log(`Server is Running Port:- ${port}`.magenta.bold)
+    console.log(`Server is Running http://localhost:${port}`.magenta.bold)
 });
