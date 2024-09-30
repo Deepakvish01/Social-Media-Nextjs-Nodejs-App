@@ -10,6 +10,17 @@ const commentSchema = new Schema({
     },
     creator:{
         type:String
+    },
+    firstname:{
+        type:String
+    }
+    ,
+    lastname: {
+        type: String
+    }
+    ,
+    profilePicture: {
+        type: String
     }
 })
 
