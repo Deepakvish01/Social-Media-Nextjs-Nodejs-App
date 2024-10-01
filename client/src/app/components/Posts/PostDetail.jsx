@@ -2,6 +2,7 @@ import { AuthContext } from '@/app/Context/AuthContext';
 import { PostsContext } from '@/app/Context/PostsContext';
 import { useSearchParams } from 'next/navigation'
 import React, { useContext, useEffect, useRef, useState } from 'react'
+import moment from 'moment';
 
 const PostDetail = () => {
   const { AuthData } = useContext(AuthContext);

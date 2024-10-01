@@ -297,9 +297,7 @@ export const removeDP = async (req, res) => {
   let dp = ""
   try {
     const _id = req.params;
-    await User.updateOne(
-      { _id: _id },
-      { $set: { profilePicture: dp } }
+    await User.updateOne({ _id: _id },{ $set: { profilePicture: dp } }
     )
     res.send("Remove Profile Picture")
   } catch (error) {

@@ -83,11 +83,7 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = await User.findById(req.user.id)
-        console.log(creator);
-        // const user = await User.findById(req.user.id)
-        // console.log(user);
-        
-        const raw = new Comment({ text, creator:creator.firstname })
+        const raw = new Comment({ text: text, creator: creator.firstname })
         const addedComment = await raw.save();
         await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
         res.send("Comment Added")
@@ -113,12 +109,14 @@ export const commentDetails = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
     try {
-        const deletedComment = await Comment.findByIdAndDelete({
+        await Comment.findByIdAndDelete({
             _id: req.params._id,
             creator: req.user.id
         })
-        console.log(deletedComment);
-
+        await Post.updateOne({ _id: req.params._id },
+            { $pull: { comments: req.params._id } }, { new: true }
+        )
+        res.send("Comment Deleted")
     } catch (error) {
         console.log(error);
     }

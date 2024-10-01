@@ -1,24 +1,15 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new Schema({
-    text:{
-        type:String
+    text: {
+        type: String
     },
-    date:{
-        type:String,
-        default:new Date()
+    date: {
+        type: String,
+        default: new Date().getSeconds()
     },
-    creator:{
-        type:String
-    },
-    firstname:{
-        type:String
-    },
-    lastname: {
-        type:String
-    },
-    profilePicture: {
-        type:String
+    creator: {
+        type: String
     }
 })
 
