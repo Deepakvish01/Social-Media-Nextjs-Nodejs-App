@@ -49,7 +49,7 @@ export const Login = ({ setMode }) => {
       </form>
       <button className="btn mt-3" id="submitBtn" onClick={() => {
         handleSubmit()
-      }} >Login</button>
+      }}> Login </button>
       <div className="text-center fs-6 my-2">
         <button className='bg-transparent' style={{ border: "0px", color: "#039BE5" }} onClick={() => {
           router.push("/Auth/ForgotPassword")

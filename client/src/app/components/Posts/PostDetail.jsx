@@ -73,9 +73,10 @@ const PostDetail = () => {
             <div className='mx-5'>
               {
                 commentList?.map((ele) => {
+                  console.log(ele);
                   return (
                     <div className='card p-2 my-1'>
-                      <div className='fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.creator} </div>
+                      <div className='fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.username} </div>
                       {ele?.text}
                     </div>
                   )
