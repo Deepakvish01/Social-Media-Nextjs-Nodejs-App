@@ -83,13 +83,13 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        const query = User.findById(req.user.id)
-        query.select("firstname lastname");
-        const username = await query.exec();       
+        const username = await User.findById(req.user.id )
+        // query.select("firstname lastname");
+        // const username = await query.exec();       
         console.log(username);
-        const raw = new Comment({ text, creator, username:username.firstname })
-        const addedComment = await raw.save();
-        await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
+        // const raw = new Comment({ text, creator })
+        // const addedComment = await raw.save();
+        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
         res.send("Comment Added")
     } catch (error) {
         console.log(error);
