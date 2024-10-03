@@ -83,13 +83,25 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        const username = await User.findById(req.user.id )
-        // query.select("firstname lastname");
-        // const username = await query.exec();       
-        console.log(username);
-        // const raw = new Comment({ text, creator })
-        // const addedComment = await raw.save();
-        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
+        const query = User.findById(req.user.id)
+        query.select("firstname");
+        const firstname = await query.exec();
+        const query1 = User.findById(req.user.id)
+        query1.select("lastname")
+        const lastname = await query1.exec();
+        const query2 = User.findById(req.user.id)
+        query2.select("profilePicture")
+        const profilePicture = await query2.exec();
+        const raw = new Comment({
+            text: text,
+            creator: creator,
+            firstname: firstname.firstname,
+            lastname: lastname.lastname,
+            profilePicture: profilePicture.profilePicture
+        })
+        console.log(raw);
+        const addedComment = await raw.save();
+        await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
         res.send("Comment Added")
     } catch (error) {
         console.log(error);
@@ -102,9 +114,7 @@ export const deleteComment = async (req, res) => {
             _id: req.params._id,
             creator: req.user.id
         })
-        await Post.updateOne({ _id: req.params._id },
-            { $pull: { comments: req.params._id } }, { new: true }
-        )
+        await Post.updateOne({ _id: req.params._id }, { $set: {} })
         res.send("Comment Deleted")
     } catch (error) {
         console.log(error);

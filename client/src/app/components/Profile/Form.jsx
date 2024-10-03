@@ -59,7 +59,7 @@ export const Form = ({ user, setUser, updateHandler, router, dpHandler }) => {
                   <div className="col-md-6 mb-3 pb-2">
                     <div className="form-outline">
                       <label className="form-label" for="email">Email</label>
-                      <input type="email" id="email" value={user.email} className="form-control form-control-lg" onChange={(e) => {
+                      <input type="email" id="email" value={user.email} className="form-control form-control-lg" disabled onChange={(e) => {
                         setUser((prev) => { return { ...prev, email: e.target.value } })
                       }} />
                     </div>
@@ -67,7 +67,7 @@ export const Form = ({ user, setUser, updateHandler, router, dpHandler }) => {
                   <div className="col-md-6 mb-3 pb-2">
                     <div className="form-outline">
                       <label className="form-label" for="phoneNumber">Phone Number</label>
-                      <input type="text" id="phone" value={user.phone} className="form-control form-control-lg" onChange={(e) => {
+                      <input type="text" id="phone" value={user.phone} className="form-control form-control-lg" disabled onChange={(e) => {
                         setUser((prev) => { return { ...prev, phone: e.target.value } })
                       }} />
                     </div>
