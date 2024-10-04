@@ -83,26 +83,38 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        const query = User.findById(req.user.id)
-        query.select("firstname");
-        const firstname = await query.exec();
-        const query1 = User.findById(req.user.id)
-        query1.select("lastname")
-        const lastname = await query1.exec();
-        const query2 = User.findById(req.user.id)
-        query2.select("profilePicture")
-        const profilePicture = await query2.exec();
+        const user = await User.findById(req.user.id)
+        console.log(user);
+
+        const filtered = user.filter(userdata);
+        console.log(filtered);
+        
+
+        function userdata(firstname) {
+            return firstname
+        }
+        
+
+
+
+
+        // const query1 = User.findById(req.user.id)
+        // query1.select("lastname")
+        // const lastname = await query1.exec();
+        // const query2 = User.findById(req.user.id)
+        // // query2.select("profilePicture")
+        // const profilePicture = await query2.exec();
         const raw = new Comment({
-            text: text,
-            creator: creator,
-            firstname: firstname.firstname,
-            lastname: lastname.lastname,
-            profilePicture: profilePicture.profilePicture
+            text,
+            creator,
+            // filtered,
+            // lastname,
+            // profilePicture: profilePicture.profilePicture
         })
         console.log(raw);
-        const addedComment = await raw.save();
-        await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
-        res.send("Comment Added")
+        // const addedComment = await raw.save();
+        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
+        // res.send("Comment Added")
     } catch (error) {
         console.log(error);
     }
