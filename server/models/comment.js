@@ -1,15 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
 const commentSchema = new Schema({
-    firstname: {
-        type: String
-    },
-    lastname: {
-        type: String
-    },
-    profilePicture: {
-        type: String
-    },
     text: {
         type: String
     },

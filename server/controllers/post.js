@@ -11,6 +11,14 @@ async function commentFormatter(comments) {
     return returnObj;
 }
 
+async function commentDetailsFormatter(Comment){
+    try {
+        
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const createPost = async (req, res) => {
     try {
         const { id } = req.user
@@ -81,33 +89,27 @@ export const likePost = async (req, res) => {
 
 export const addComments = async (req, res) => {
     try {
-        const user = await User.findById(req.user.id)
+        const { text } = req.body;
+        const creator = req.user.id;
+        const user = await commentDetailsFormatter(Comment)
         console.log(user);
-        const filtered = user.filter(users)
-        console.log(filtered);
         
-        function users(firstname){
-            return firstname
-        }
         
-        // const { text } = req.body;
-        // const creator = req.user.id;
         // const query = User.findById(req.user.id)
-        // query.select("firstname")
-        // const firstname = await query.exec()
+        // query.select("firstname lastname")
+        // const user = await query.exec()
         // const query1 = User.findById(req.user.id)
         // query1.select("lastname")
         // const lastname = await query1.exec();
         // const query2 = User.findById(req.user.id)
         // const profilePicture = await query2.exec();
         // query2.select("profilePicture")
-        // const raw = new Comment({
-        //     text: text,
-        //     creator: creator,
-        //     firstname: firstname.firstname,
-        //     lastname: lastname.lastname,
-        //     // profilePicture: profilePicture.profilePicture
-        // })
+        const raw = new Comment({
+            text: text,
+            creator: creator,
+        })
+        console.log(raw);
+        
         // const addedComment = await raw.save();
         // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
         // res.send("Comment Added")
