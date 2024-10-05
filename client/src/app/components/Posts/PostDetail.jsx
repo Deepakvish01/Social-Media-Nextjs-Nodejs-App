@@ -2,14 +2,28 @@ import { AuthContext } from '@/app/Context/AuthContext';
 import { PostsContext } from '@/app/Context/PostsContext';
 import { useSearchParams } from 'next/navigation'
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import moment from 'moment';
+
+const CardModel = ({ setShowCard, handleDelete }) => {
+  return (
+    <div className='card p-3 shadow bg-danger-subtle'>
+      <div className='d-flex justify-content-center'></div>
+      <button className='btn btn-danger my-2' onClick={() => {
+        handleDelete();
+      }}> ! Delete </button>
+      <button className='btn btn-info' onClick={() => {
+        setShowCard(prev => !prev)
+      }}>Cancel</button>
+    </div>
+  )
+}
 
 const PostDetail = () => {
   const { AuthData } = useContext(AuthContext);
-  const { getPostById, addComment } = useContext(PostsContext);
+  const { getPostById, addComment, deleteComment } = useContext(PostsContext);
   const [post, setPost] = useState();
   const [comment, setComment] = useState({ text: "" });
   const [commentList, setCommentList] = useState();
+  const [showCard, setShowCard] = useState(false);
   const ref = useRef();
   const params = useSearchParams();
 
@@ -30,11 +44,20 @@ const PostDetail = () => {
   async function handleSubmit() {
     try {
       const status = await addComment(params.get("id"), AuthData, comment);
-      console.log(status);
-
       if (status == 200) {
         ref.current.value = ""
         fetchPost();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handeleDelete(id) {
+    try {
+      const status = await deleteComment(id, AuthData)
+      if (status == 200) {
+        fetchPost()
       }
     } catch (error) {
       console.log(error);
@@ -75,7 +98,19 @@ const PostDetail = () => {
                 commentList?.map((ele) => {
                   return (
                     <div className='card p-2 my-2'>
-                      <div className='fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.firstname} {ele?.lastname} </div>
+                      <div className='d-flex justify-content-between fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.firstname} {ele?.lastname}
+                        <svg xmlns="http://www.w3.org/2000/svg"
+                          width="16"
+                          height="16"
+                          fill="currentColor"
+                          class="bi bi-three-dots-vertical"
+                          viewBox="0 0 16 16"
+                          onClick={() => {
+                            setShowCard(prev => !prev)
+                          }}>
+                          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                        </svg>
+                      </div>
                       {ele?.text}
                     </div>
                   )
@@ -83,6 +118,13 @@ const PostDetail = () => {
               }
             </div>
           </div>
+          {
+            showCard && (
+              <div className='p-2' style={{ position: "absolute", right: "54%", top: "73%" }} >
+                <CardModel setShowCard={setShowCard} handleDelete={handeleDelete} />
+              </div>
+            )
+          }
         </div>
       }
     </div>

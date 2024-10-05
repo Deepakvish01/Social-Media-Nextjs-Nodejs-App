@@ -91,7 +91,19 @@ async function addComment(id, AuthData, body) {
       return req;
     });
     const response = await API.put(`/posts/addComment/${id}`, body);
-    // console.log(response);
+    return response?.status;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+async function deleteComment(id,AuthData){
+  try {
+    API.interceptors.request.use((req) => {
+      req.headers.authorization = `bearer ${AuthData.token}`;
+      return req;
+    });
+    const response = await API.put(`/posts/deleteComment/${id}`);
     return response?.status;
   } catch (error) {
     console.log(error);
@@ -125,7 +137,8 @@ export const PostsProvider = ({ children }) => {
         deletePost,
         getPostById,
         likePost,
-        addComment
+        addComment,
+        deleteComment
       }}>
       {children}
     </PostsContext.Provider>
