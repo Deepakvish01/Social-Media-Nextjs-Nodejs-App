@@ -11,14 +11,6 @@ async function commentFormatter(comments) {
     return returnObj;
 }
 
-async function commentDetailsFormatter(Comment){
-    try {
-        
-    } catch (error) {
-        console.log(error);
-    }
-}
-
 export const createPost = async (req, res) => {
     try {
         const { id } = req.user
@@ -90,26 +82,14 @@ export const likePost = async (req, res) => {
 export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
-        const creator = req.user.id;
-        const user = await commentDetailsFormatter(Comment)
-        console.log(user);
+        const creator = req.user.id; 
+
         
-        
-        // const query = User.findById(req.user.id)
-        // query.select("firstname lastname")
-        // const user = await query.exec()
-        // const query1 = User.findById(req.user.id)
-        // query1.select("lastname")
-        // const lastname = await query1.exec();
-        // const query2 = User.findById(req.user.id)
-        // const profilePicture = await query2.exec();
-        // query2.select("profilePicture")
         const raw = new Comment({
             text: text,
             creator: creator,
         })
         console.log(raw);
-        
         // const addedComment = await raw.save();
         // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
         // res.send("Comment Added")
@@ -128,7 +108,8 @@ export const deleteComment = async (req, res) => {
             _id: req.params._id,
         })
         const posts = post.comments
-        await Post.updateOne({ _id: req.params._id }, { $in: posts })
+        console.log(posts);
+        // await Post.updateOne({ _id: req.params._id }, { $in: posts })
         res.send("Comment Deleted")
     } catch (error) {
         console.log(error);
