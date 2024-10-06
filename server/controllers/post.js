@@ -82,17 +82,15 @@ export const likePost = async (req, res) => {
 export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
-        const creator = req.user.id; 
-
-        
+        const creator = req.user.id;
         const raw = new Comment({
-            text: text,
-            creator: creator,
+            text,
+            creator
         })
-        console.log(raw);
-        // const addedComment = await raw.save();
-        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: addedComment._id } });
-        // res.send("Comment Added")
+        // console.log(raw);
+        const addedComment = await raw.save();
+        await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
+        res.send("Comment Added")
     } catch (error) {
         console.log(error);
     }
@@ -100,16 +98,19 @@ export const addComments = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
     try {
-        await Comment.findByIdAndDelete({
-            _id: req.params._id,
-            creator: req.user.id
+        const { _id } = req.body;
+
+        const postId = req.params;
+        const comment = await Comment.findByIdAndDelete({
+            _id: _id
         })
+        console.log(comment);
         const post = await Post.findOne({
-            _id: req.params._id,
+            _id: postId
         })
-        const posts = post.comments
-        console.log(posts);
-        // await Post.updateOne({ _id: req.params._id }, { $in: posts })
+        const { comments } = post;
+        const delete_post = await Post.updateOne({ _id: postId }, { $pull: { comments: _id } })
+        console.log(delete_post);
         res.send("Comment Deleted")
     } catch (error) {
         console.log(error);
