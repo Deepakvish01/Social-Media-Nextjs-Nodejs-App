@@ -57,7 +57,7 @@ export const Card = ({ post, setMode, setPostToBeEdited, fetchPosts }) => {
   return (
     <div className="card shadow-lg p-5 mb-5">
       <div className="d-flex justify-content-between p-1">
-        <h2 className='fw-bold' style={{ fontFamily: "cursive" }}>{post.title}</h2>
+        <h2 className='fw-bold'>{post.title}</h2>
         <div>
           {
             AuthData?.userId === post.creator

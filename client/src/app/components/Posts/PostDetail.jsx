@@ -2,20 +2,7 @@ import { AuthContext } from '@/app/Context/AuthContext';
 import { PostsContext } from '@/app/Context/PostsContext';
 import { useSearchParams } from 'next/navigation'
 import React, { useContext, useEffect, useRef, useState } from 'react'
-
-const CardModel = ({ setShowCard, handleDelete }) => {
-  return (
-    <div className='card p-3 shadow bg-danger-subtle'>
-      <div className='d-flex justify-content-center'></div>
-      <button className='btn btn-danger my-2' onClick={() => {
-        handleDelete();
-      }}> ! Delete </button>
-      <button className='btn btn-info' onClick={() => {
-        setShowCard(prev => !prev)
-      }}>Cancel</button>
-    </div>
-  )
-}
+import Comment from './Comment';
 
 const PostDetail = () => {
   const { AuthData } = useContext(AuthContext);
@@ -23,7 +10,6 @@ const PostDetail = () => {
   const [post, setPost] = useState();
   const [comment, setComment] = useState({ text: "" });
   const [commentList, setCommentList] = useState();
-  const [showCard, setShowCard] = useState(false);
   const ref = useRef();
   const params = useSearchParams();
 
@@ -53,9 +39,9 @@ const PostDetail = () => {
     }
   }
 
-  async function handeleDelete(id) {
+  async function handleCommentDelete(Comment) {
     try {
-      const status = await deleteComment(id, AuthData)
+      const status = await deleteComment(params.get("id"), AuthData,Comment._id)
       if (status == 200) {
         fetchPost()
       }
@@ -69,7 +55,7 @@ const PostDetail = () => {
       {
         post && <div className="card shadow-lg p-5 mb-5">
           <div className="d-flex justify-content-between p-1">
-            <h4>{post?.title}</h4>
+            <h2 className='fw-bold'>{post?.title}</h2>
           </div>
           <img id={post?._id} className="my-2"
             src={post?.image} />
@@ -83,7 +69,6 @@ const PostDetail = () => {
               })}
           </div>
           <div className='d-flex p-1 my-3'>
-            <form method='post'>
               <div>
                 <input ref={ref} type="text" className='form-control mb-3' placeholder='Type Comment' onChange={(e) => {
                   setComment((prev) => { return { ...prev, text: e.target.value } })
@@ -92,39 +77,14 @@ const PostDetail = () => {
                   handleSubmit();
                 }}>Comment</button>
               </div>
-            </form>
             <div className='mx-5'>
               {
                 commentList?.map((ele) => {
-                  return (
-                    <div className='card p-2 my-2'>
-                      <div className='d-flex justify-content-between fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.firstname} {ele?.lastname}
-                        <svg xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          class="bi bi-three-dots-vertical"
-                          viewBox="0 0 16 16"
-                          onClick={() => {
-                            setShowCard(prev => !prev)
-                          }}>
-                          <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                        </svg>
-                      </div>
-                      {ele?.text}
-                    </div>
-                  )
+                  return <Comment ele={ele} handleCommentDelete={handleCommentDelete}/>
                 })
               }
             </div>
           </div>
-          {
-            showCard && (
-              <div className='p-2' style={{ position: "absolute", right: "54%", top: "73%" }} >
-                <CardModel setShowCard={setShowCard} handleDelete={handeleDelete} />
-              </div>
-            )
-          }
         </div>
       }
     </div>

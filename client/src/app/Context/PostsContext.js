@@ -97,13 +97,14 @@ async function addComment(id, AuthData, body) {
   }
 }
 
-async function deleteComment(id,AuthData){
+async function deleteComment(id,AuthData,commentId){
+  
   try {
     API.interceptors.request.use((req) => {
       req.headers.authorization = `bearer ${AuthData.token}`;
       return req;
     });
-    const response = await API.put(`/posts/deleteComment/${id}`);
+    const response = await API.delete(`/posts/deleteComment/?postId=${id}&commentId=${commentId}`);
     return response?.status;
   } catch (error) {
     console.log(error);

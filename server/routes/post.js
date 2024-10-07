@@ -10,6 +10,6 @@ postRouter.delete("/deletePost/:_id", authenticator, deletePost);
 postRouter.get("/getPostById/:_id", authenticator, getPostById);
 postRouter.put("/likePost/:_id", authenticator, likePost);
 postRouter.put("/addComment/:_id", authenticator, addComments);
-postRouter.put("/deleteComment/:_id", authenticator, deleteComment)
+postRouter.delete("/deleteComment", authenticator, deleteComment)
 
 export default postRouter;

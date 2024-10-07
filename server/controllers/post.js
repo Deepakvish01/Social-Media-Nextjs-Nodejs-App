@@ -11,6 +11,27 @@ async function commentFormatter(comments) {
     return returnObj;
 }
 
+async function commentDetailsFormatter(user) {
+    let users = []
+    for await (let item of user) {
+      const returnValue = await retriveUser(item);
+      users.push(returnValue)
+    }
+    return user;
+  }
+  
+  async function retriveUser(id) {
+    try {
+      const query = User.findById(id);
+      query.select("firstname lastname profilePicture")
+      const user = await query.exec();
+      return user;
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+
 export const createPost = async (req, res) => {
     try {
         const { id } = req.user
@@ -83,11 +104,15 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        const raw = new Comment({
-            text,
-            creator
-        })
-        // console.log(raw);
+        // const query = User.findById(req.user.id);
+        // query.select("firstname lastname profilePicture");
+        // const user = await query.exec();
+        // const commentDetails = await commentDetailsFormatter(user);
+        // console.log(commentDetails);
+        
+
+
+        const raw = new Comment({ text, creator })
         const addedComment = await raw.save();
         await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
         res.send("Comment Added")
@@ -98,19 +123,12 @@ export const addComments = async (req, res) => {
 
 export const deleteComment = async (req, res) => {
     try {
-        const { _id } = req.body;
-
-        const postId = req.params;
-        const comment = await Comment.findByIdAndDelete({
-            _id: _id
-        })
-        console.log(comment);
-        const post = await Post.findOne({
-            _id: postId
-        })
+        const commentId = req.query.commentId;
+        const postId = req.query.postId;
+        await Comment.findByIdAndDelete({ _id: commentId })
+        const post = await Post.findOne({ _id: postId })
         const { comments } = post;
-        const delete_post = await Post.updateOne({ _id: postId }, { $pull: { comments: _id } })
-        console.log(delete_post);
+        await Post.updateOne({ _id: postId }, { $pull: { comments: commentId } })
         res.send("Comment Deleted")
     } catch (error) {
         console.log(error);
