@@ -22,7 +22,7 @@ const CardModel = ({ setShowCard, handleDelete }) => {
 
 export const Card = ({ post, setMode, setPostToBeEdited, fetchPosts }) => {
   const { AuthData } = useContext(AuthContext);
-  const { deletePost, likePost } = useContext(PostsContext);
+  const { deletePost, likePost, removeLike } = useContext(PostsContext);
   const [showCard, setShowCard] = useState(false);
   const router = useRouter();
 
@@ -40,6 +40,15 @@ export const Card = ({ post, setMode, setPostToBeEdited, fetchPosts }) => {
     try {
       await likePost(post._id, AuthData);
       await fetchPosts();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  async function handleRemoveLike(){
+    try {
+      await removeLike(post._id,AuthData);
+      await fetchPosts()
     } catch (error) {
       console.log(error);
     }
@@ -113,7 +122,11 @@ export const Card = ({ post, setMode, setPostToBeEdited, fetchPosts }) => {
               width="20"
               height="20"
               fill="red"
-              className="bi bi-heart-fill" viewBox="0 0 16 16">
+              className="bi bi-heart-fill"
+              viewBox="0 0 16 16"
+              onClick={()=>{
+                handleRemoveLike();
+              }}>
               <path fill-rule="evenodd" d="M8 1.314C12.438-3.248 23.534 4.735 8 15-7.534 4.736 3.562-3.248 8 1.314" />
             </svg> &nbsp; {post.likes.length}
           </>
@@ -124,7 +137,8 @@ export const Card = ({ post, setMode, setPostToBeEdited, fetchPosts }) => {
               width="20"
               height="20"
               fill="currentColor"
-              className="bi bi-heart" viewBox="0 0 16 16"
+              className="bi bi-heart"
+              viewBox="0 0 16 16"
               onClick={() => {
                 handleLikes();
               }}>

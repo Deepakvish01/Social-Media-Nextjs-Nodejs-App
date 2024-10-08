@@ -5,11 +5,11 @@ const Comment = ({ ele, handleCommentDelete }) => {
 
   const CardModel = ({ setShowCard, handleCommentDelete }) => {
     return (
-      <div className='card p-3 shadow bg-danger-subtle'>
-        <div className='d-flex justify-content-center'></div>
+      <div className='card p-2 shadow' style={{width:"100px"}}> 
+        <div className=''></div>
         <button className='btn btn-danger my-2' onClick={() => {
           handleCommentDelete(ele);
-        }}> ! Delete </button>
+        }}> Delete </button>
         <button className='btn btn-info' onClick={() => {
           setShowCard(prev => !prev)
         }}>Cancel</button>
@@ -18,7 +18,7 @@ const Comment = ({ ele, handleCommentDelete }) => {
   }
 
   return (
-    <div className='card p-2 my-2'>
+    <div className='card p-2 mb-3'>
       <div className='d-flex justify-content-between fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.firstname} {ele?.lastname}
         <svg xmlns="http://www.w3.org/2000/svg"
           width="16"
@@ -36,7 +36,7 @@ const Comment = ({ ele, handleCommentDelete }) => {
       {ele?.text}
       {
         showCard && (
-          <div className='p-2' style={{ position: "absolute", left: "54%", top: "10%", }} >
+          <div className='' style={{ position: "absolute", left: "101%", bottom:"1px", top:"1px" }} >
             <CardModel setShowCard={setShowCard} handleCommentDelete={handleCommentDelete} />
           </div>
         )

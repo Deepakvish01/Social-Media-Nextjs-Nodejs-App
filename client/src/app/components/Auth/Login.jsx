@@ -16,7 +16,7 @@ export const Login = ({ setMode }) => {
         payload: data?.data
       })
       if (data?.status != 200) {
-        alert(" ! Wrong Password ! Try Again")
+        alert("Wrong Password ! Try Again")
         ref.current.reset()
       } else {
         router.push("/Posts")

@@ -132,7 +132,7 @@ async function removeDP(AuthData){
       req.headers.authorization = `bearer ${AuthData.token}`;
       return req;
     });
-    const response = await API.put(`/user/removeDP/${AuthData?.userId}`);
+    const response = await API.put(`/user/removeDP`);
     return response?.status
   } catch (error) {
     console.log(error);

@@ -25,8 +25,6 @@ export const Friends = () => {
   async function fetchAllFriends() {
     try {
       const data = await getAllFriends(AuthData);
-      console.log(data);
-
       dispatch({
         type: "GET_ALL_FRIENDS",
         payload: data

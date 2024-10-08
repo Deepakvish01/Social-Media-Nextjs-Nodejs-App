@@ -4,8 +4,6 @@ import "./globals.css"
 import { AuthProvider } from "./Context/AuthContext";
 import { PostsProvider } from "./Context/PostsContext";
 import { ProfileProvider } from "./Context/ProfileContext";
-import { ToastContainer } from "./MsgToast";
-import 'react-toastify/dist/ReactToastify.css';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +22,6 @@ export default function RootLayout({ children }) {
             <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" />
           </AuthProvider>
         </PostsProvider>
-        <ToastContainer />
       </body>
     </html>
   );

@@ -77,7 +77,7 @@ const PostDetail = () => {
                   handleSubmit();
                 }}>Comment</button>
               </div>
-            <div className='mx-5'>
+            <div className='mx-3'>
               {
                 commentList?.map((ele) => {
                   return <Comment ele={ele} handleCommentDelete={handleCommentDelete}/>

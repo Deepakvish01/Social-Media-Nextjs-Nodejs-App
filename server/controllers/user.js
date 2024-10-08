@@ -150,8 +150,8 @@ export const acceptFriendRequest = async (req, res) => {
 
 export const requestsReceived = async (req, res) => {
   try {
-    const id = req.user.id;
-    const query = User.findOne({ _id: id });
+    const userId = req.user.id;
+    const query = User.findOne({ _id: userId });
     query.select("requestsReceived");
     const user = await query.exec();
     const requestsReceived = await requestsFormatter(user.requestsReceived);
@@ -163,8 +163,8 @@ export const requestsReceived = async (req, res) => {
 
 export const getAllFriends = async (req, res) => {
   try {
-    const id = req.user.id;
-    const query = User.findOne({ _id: id });
+    const userId = req.user.id;
+    const query = User.findOne({ _id: userId });
     query.select("friends");
     const user = await query.exec();
     const friends = await friendsFormatter(user.friends);
@@ -172,6 +172,21 @@ export const getAllFriends = async (req, res) => {
   } catch (error) {
     console.log(error);
 
+  }
+}
+
+export const searchFriends = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const user = await User.findOne({ _id: userId })
+    const { friends } = user
+    const searchAllFriend = friends.filter((ele) => {
+      return ele
+    })
+    console.log(searchAllFriend);
+    
+  } catch (error) {
+    console.log(error);
   }
 }
 
@@ -296,8 +311,8 @@ export const verifyOtp = async (req, res) => {
 export const removeDP = async (req, res) => {
   let dp = ""
   try {
-    const _id = req.params;
-    await User.updateOne({ _id: _id },{ $set: { profilePicture: dp } }
+    const userId = req.user.id
+    await User.updateOne({ _id: userId }, { $set: { profilePicture: dp } }
     )
     res.send("Remove Profile Picture")
   } catch (error) {

@@ -14,22 +14,22 @@ async function commentFormatter(comments) {
 async function commentDetailsFormatter(user) {
     let users = []
     for await (let item of user) {
-      const returnValue = await retriveUser(item);
-      users.push(returnValue)
+        const returnValue = await retriveUser(item);
+        users.push(returnValue)
     }
     return user;
-  }
-  
-  async function retriveUser(id) {
+}
+
+async function retriveUser(id) {
     try {
-      const query = User.findById(id);
-      query.select("firstname lastname profilePicture")
-      const user = await query.exec();
-      return user;
+        const query = User.findById(id);
+        query.select("firstname lastname profilePicture")
+        const user = await query.exec();
+        return user;
     } catch (error) {
-      console.log(error);
+        console.log(error);
     }
-  }
+}
 
 
 export const createPost = async (req, res) => {
@@ -100,6 +100,16 @@ export const likePost = async (req, res) => {
     }
 }
 
+export const removeLike = async (req, res) => {
+    try {
+        const likedBy = req.user.id
+        await Post.updateOne({ _id: req.params._id }, { $pull: { likes: likedBy } });
+        res.send("Like Removed")
+    } catch (error) {
+        console.log(error);
+    }
+}
+
 export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
@@ -109,7 +119,7 @@ export const addComments = async (req, res) => {
         // const user = await query.exec();
         // const commentDetails = await commentDetailsFormatter(user);
         // console.log(commentDetails);
-        
+
 
 
         const raw = new Comment({ text, creator })

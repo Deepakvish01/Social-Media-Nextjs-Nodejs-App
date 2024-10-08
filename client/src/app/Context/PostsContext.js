@@ -58,6 +58,19 @@ async function likePost(id, AuthData) {
   }
 }
 
+async function removeLike(id,AuthData){
+  try {
+    API.interceptors.request.use((req) => {
+      req.headers.authorization = `bearer ${AuthData.token}`;
+      return req;
+    });
+    const response = await API.put(`/posts/removeLike/${id}`);
+    return response?.status;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 async function updatePost(id, AuthData, body) {
   try {
     API.interceptors.request.use((req) => {
@@ -139,7 +152,8 @@ export const PostsProvider = ({ children }) => {
         getPostById,
         likePost,
         addComment,
-        deleteComment
+        deleteComment,
+        removeLike
       }}>
       {children}
     </PostsContext.Provider>
