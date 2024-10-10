@@ -11,11 +11,13 @@ async function commentFormatter(comments) {
     return returnObj;
 }
 
-async function commentDetailsFormatter(user) {
-    let users = []
-    for await (let item of user) {
-        const returnValue = await retriveUser(item);
-        users.push(returnValue)
+async function commentDetailsFormatter(reqArray) {
+    let user = {}
+    for await (let id of reqArray) {
+        const returnValue = await retriveUser(id);
+        console.log(returnValue);
+        
+        // users.push(returnValue)
     }
     return user;
 }
@@ -114,18 +116,20 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        // const query = User.findById(req.user.id);
-        // query.select("firstname lastname profilePicture");
-        // const user = await query.exec();
-        // const commentDetails = await commentDetailsFormatter(user);
+        const query = User.findById(req.user.id);
+        query.select("firstname lastname profilePicture");
+        const user = await query.exec();
+        const commentDetails = await commentDetailsFormatter(user);
         // console.log(commentDetails);
 
 
 
         const raw = new Comment({ text, creator })
-        const addedComment = await raw.save();
-        await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
-        res.send("Comment Added")
+        // console.log(raw);
+        
+        // const addedComment = await raw.save();
+        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
+        // res.send("Comment Added")
     } catch (error) {
         console.log(error);
     }
