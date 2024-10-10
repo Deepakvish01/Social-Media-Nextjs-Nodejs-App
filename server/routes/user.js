@@ -15,6 +15,6 @@ userRouter.put("/sendFriendRequest/:_id", authenticator, sendFriendRequest);
 userRouter.put("/acceptFriendRequest/:_id", authenticator, acceptFriendRequest);
 userRouter.put("/removeRequest/:_id", authenticator, removeRequest);
 userRouter.put("/deleteFriend/:_id", authenticator, deleteFriend)
-userRouter.put("/deleteUser/:_id",authenticator, deleteUser)
+userRouter.delete("/deleteUser",authenticator, deleteUser)
 
 export default userRouter;

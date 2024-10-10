@@ -184,7 +184,7 @@ export const searchFriends = async (req, res) => {
       return ele
     })
     console.log(searchAllFriend);
-    
+
   } catch (error) {
     console.log(error);
   }
@@ -322,10 +322,37 @@ export const removeDP = async (req, res) => {
 
 export const deleteUser = async (req, res) => {
   try {
-    // const id = req.par
-    // const clearpost = await Post.findOne({ _id: id });
-    // res.send(clearpost)
-    // console.log(clearpost);
+    // User Deleted
+    const userId = req.user.id;
+    // await User.findByIdAndDelete({_id:userId});   
+
+    // User Post, Like and Comment Deleted
+    // await Post.deleteMany({ creator: userId });
+    const posts = await Post.find({
+      creator:userId
+    })
+    // console.log(posts);
+    const {likes} = posts
+    console.log(likes);
+    
+
+    
+    
+    
+    // const deletelike = await Post.deleteMany({ creator: userId });
+    // console.log(deleteLike);
+
+
+
+
+
+
+
+
+
+
+
+    res.send("User Deleted")
   } catch (error) {
     console.log(error);
   }
