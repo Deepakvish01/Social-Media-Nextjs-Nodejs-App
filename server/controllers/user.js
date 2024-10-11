@@ -328,12 +328,13 @@ export const deleteUser = async (req, res) => {
 
     // User Post, Like and Comment Deleted
     // await Post.deleteMany({ creator: userId });
-    const posts = await Post.find({
-      creator:userId
+    const posts = await Post.findById({
+      creator:req.user.id
     })
-    // console.log(posts);
-    const {likes} = posts
-    console.log(likes);
+    const deletelike = await Post.deleteMany({})
+    console.log(deletelike);
+    
+    // const {likes} = Post
     
 
     
