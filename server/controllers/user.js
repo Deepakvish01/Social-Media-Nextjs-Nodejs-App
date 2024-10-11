@@ -324,15 +324,26 @@ export const deleteUser = async (req, res) => {
   try {
     // User Deleted
     const userId = req.user.id;
+    // const {_id} = req.parmas._id;
     // await User.findByIdAndDelete({_id:userId});   
 
     // User Post, Like and Comment Deleted
     // await Post.deleteMany({ creator: userId });
-    const posts = await Post.findById({
-      creator:req.user.id
-    })
-    const deletelike = await Post.deleteMany({})
-    console.log(deletelike);
+    const posts = await Post.find()
+    console.log(posts);
+    const {likes} = posts
+    // console.log(likes);
+    
+    // const likedBy = userId
+    // console.log(likedBy);
+
+    // const {comments} = posts
+    // console.log(comments);
+        
+    // console.log(likes);
+    // const deletelikes = await Post.updateOne({creator:userId},{$pull:{likes:likedBy}})
+    // console.log(deletelikes);
+    
     
     // const {likes} = Post
     

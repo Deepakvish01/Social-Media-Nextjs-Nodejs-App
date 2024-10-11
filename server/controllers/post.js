@@ -11,27 +11,27 @@ async function commentFormatter(comments) {
     return returnObj;
 }
 
-async function commentDetailsFormatter(reqArray) {
-    let user = {}
-    for await (let id of reqArray) {
-        const returnValue = await retriveUser(id);
-        console.log(returnValue);
-        
-        // users.push(returnValue)
-    }
-    return user;
-}
+// async function commentDetailsFormatter(reqArray) {
+//     let user = {}
+//     for await (let id of reqArray) {
+//         const returnValue = await retriveUser(id);
+//         console.log(returnValue);
 
-async function retriveUser(id) {
-    try {
-        const query = User.findById(id);
-        query.select("firstname lastname profilePicture")
-        const user = await query.exec();
-        return user;
-    } catch (error) {
-        console.log(error);
-    }
-}
+//         // users.push(returnValue)
+//     }
+//     return user;
+// }
+
+// async function retriveUser(id) {
+//     try {
+//         const query = User.findById(id);
+//         query.select("firstname lastname profilePicture")
+//         const user = await query.exec();
+//         return user;
+//     } catch (error) {
+//         console.log(error);
+//     }
+// }
 
 
 export const createPost = async (req, res) => {
@@ -116,23 +116,13 @@ export const addComments = async (req, res) => {
     try {
         const { text } = req.body;
         const creator = req.user.id;
-        const query = User.findById(req.user.id);
-        query.select("firstname lastname profilePicture");
-        const user = await query.exec();
-        const commentDetails = await commentDetailsFormatter(user);
-        // console.log(commentDetails);
-
-
-
         const raw = new Comment({ text, creator })
-        // console.log(raw);
-        
-        // const addedComment = await raw.save();
-        // await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
-        // res.send("Comment Added")
+        const addedComment = await raw.save();
+        await Post.updateOne({ _id: req.params._id }, { $push: { comments: `${addedComment._id}` } });
+        res.send("Comment Added")
     } catch (error) {
         console.log(error);
-    }
+    }x
 }
 
 export const deleteComment = async (req, res) => {
