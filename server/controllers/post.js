@@ -122,7 +122,7 @@ export const addComments = async (req, res) => {
         res.send("Comment Added")
     } catch (error) {
         console.log(error);
-    }x
+    }
 }
 
 export const deleteComment = async (req, res) => {
