@@ -2,6 +2,7 @@ import { AuthContext } from '@/app/Context/AuthContext';
 import { useRouter } from 'next/navigation'
 import React, { useContext } from 'react'
 import { imageURL } from '../Profile/EdtiProfile';
+import Main from '../Posts/Main';
 
 const Header = ({user}) => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const Header = ({user}) => {
   return (
     <nav className="navbar fixed-top navbar-expand-lg bg-dark navbar-dark" >
       <div className="container-fluid">
-        <img src={user?.profilePicture.length == 0 ? imageURL : user?.profilePicture} style={{height:"40px",width:"40px",borderRadius:"50%" }} onClick={() => {
+        <img src={user?.profilePicture?.length == 0 ? imageURL : user?.profilePicture} style={{height:"40px",width:"40px",borderRadius:"50%" }} onClick={() => {
           router.push("/Profile")
         }} />
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">

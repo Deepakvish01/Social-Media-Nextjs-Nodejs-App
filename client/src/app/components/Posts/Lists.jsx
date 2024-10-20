@@ -3,6 +3,7 @@ import { PostsContext } from "@/app/Context/PostsContext";
 import { AuthContext } from "@/app/Context/AuthContext";
 import { Card } from "./Card";
 import { useRouter } from "next/navigation";
+import Comment from "./Comment";
 
 export const Lists = ({ setMode, setPostToBeEdited }) => {
   const { getPosts, Posts, dispatch } = useContext(PostsContext);
@@ -31,7 +32,10 @@ export const Lists = ({ setMode, setPostToBeEdited }) => {
       {
         Posts?.map((post) => {
           
-          return <Card setMode={setMode} post={post} setPostToBeEdited={setPostToBeEdited} fetchPosts={fetchPosts} />
+          return(
+            <Comment AuthData={AuthData} post={post} />,
+            <Card setMode={setMode} post={post} setPostToBeEdited={setPostToBeEdited} fetchPosts={fetchPosts} />
+          )
         })
       }
     </div>

@@ -1,5 +1,6 @@
 import React from 'react'
 import { imageURL } from './EdtiProfile'
+import Header from '../Header/Main'
 
 export const Form = ({ user, setUser, updateHandler, router, dpHandler }) => {
   return (
@@ -112,7 +113,8 @@ export const Form = ({ user, setUser, updateHandler, router, dpHandler }) => {
             </div>
           </div>
         </div>
-      }
+      },
+      <Header user={user}/>
     </>
   )
 }

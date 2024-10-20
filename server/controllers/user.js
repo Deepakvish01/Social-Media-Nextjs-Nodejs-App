@@ -1,3 +1,4 @@
+import Comment from "../models/comment.js";
 import Post from "../models/post.js";
 import User from "../models/user.js";
 import nodemailer from "nodemailer";
@@ -334,12 +335,13 @@ export const deleteUser = async (req, res) => {
     // await Post.updateMany({}, { $pull: { likes: likedBy } });
 
     // Comments deleted form all users
-    const commentId = userId;
-    console.log(commentId);
-    
-    // const deleteComment = await Post.updateMany({},{$pull:{comments:commentId}});
+    // const deletePostComments = await Post.updateMany({},{})  ////// Pending
+    // const deleteComment = await Comment.deleteMany({creator:userId})
     // console.log(deleteComment);
-    
+
+    // Request deleted from all users
+
+
 
 
 

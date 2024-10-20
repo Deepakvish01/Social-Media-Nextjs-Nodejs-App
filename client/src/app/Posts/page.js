@@ -14,7 +14,7 @@ const page = () => {
     }, [])
     return (
         <div>
-            <Header />
+            <Header/>
             <Main />
         </div>
     )

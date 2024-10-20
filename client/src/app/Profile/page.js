@@ -4,7 +4,7 @@ import { checkAuthHandler } from '@/Utils/constants';
 import { AuthContext } from '../Context/AuthContext';
 import { useRouter } from 'next/navigation';
 import { Main } from '../components/Profile/Main';
-import Header from '../components/Header/Main';
+// import Header from '../components/Header/Main';
 
 const page = () => {
 	const router = useRouter();
@@ -15,7 +15,7 @@ const page = () => {
 	return (
 		<div className='p-3'> 
 			<Main/>
-			<Header/>
+			{/* <Header/> */}
 		</div>
 	)
 }

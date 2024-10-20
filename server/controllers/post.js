@@ -69,11 +69,18 @@ export const updatePost = async (req, res) => {
 
 export const deletePost = async (req, res) => {
     try {
-        const deletedPost = await Post.findByIdAndDelete({
+        const userId = req.user.id
+        await Post.findByIdAndDelete({
             _id: req.params._id,
-            creator: req.user.id
+            creator: userId
         })
-        res.send({ deletedPost, msg: "Delete" })
+        // const comment = await Comment.find()
+        // console.log(comment);
+        
+        // // const deleteComment = await Comment.deleteMany
+        // // console.log(deleteComment);
+        
+        res.send({ msg: "Delete" })
     } catch (error) {
         console.log(error);
     }
