@@ -4,7 +4,7 @@ import React, { useContext, useRef, useState } from 'react';
 
 export const Signup = ({ setMode }) => {
   const { signup, dispatch } = useContext(AuthContext);
-  const ref = useRef(null)
+  const ref = useRef(null);
   const router = useRouter();
   const [formData, setFormData] = useState({
     firstname: "",
@@ -21,10 +21,10 @@ export const Signup = ({ setMode }) => {
   async function handleSubmit() {
     try {
       if (formData.firstname == "" || formData.lastname == "" || formData.age == "" || formData.phone == "" ||
-        formData.gender == "" || formData.email == "" ) {
+        formData.gender == "" || formData.email == "") {
         alert("FILL OUT THE FIELDS !")
       }
-      if (formData.password != formData.confirmPassword ) {
+      if (formData.password != formData.confirmPassword) {
         alert("Match Your Password with Confirm Password !");
       } else {
         delete formData.confirmPassword;
