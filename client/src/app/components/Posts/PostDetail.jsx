@@ -80,7 +80,7 @@ const PostDetail = () => {
             <div className='mx-3'>
               {
                 commentList?.map((ele) => {
-                  return <Comment ele={ele} handleCommentDelete={handleCommentDelete}/>
+                  return <Comment ele={ele} handleCommentDelete={handleCommentDelete} commentList={commentList} />
                 })
               }
             </div>

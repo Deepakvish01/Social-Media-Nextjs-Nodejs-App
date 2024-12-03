@@ -62,7 +62,7 @@ export const checkLogin = async (req, res) => {
     try {
         const { token } = req.body;
         await jwt.verify(token, process.env.SECRET);
-        res.send({ msg: "Token Valid" })
+        res.send({ msg: "! Invalid Token" })
     } catch (error) {
         console.log(error);
         res.status(401).send({ msg: "Signin Again" });

@@ -31,9 +31,7 @@ export const Lists = ({ setMode, setPostToBeEdited }) => {
     <div className="container my-5 pt-5">
       {
         Posts?.map((post) => {
-          
           return(
-            <Comment AuthData={AuthData} post={post} />,
             <Card setMode={setMode} post={post} setPostToBeEdited={setPostToBeEdited} fetchPosts={fetchPosts} />
           )
         })

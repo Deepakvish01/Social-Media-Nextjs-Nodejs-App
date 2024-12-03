@@ -1,7 +1,9 @@
-import React, { useState } from 'react'
+import { AuthContext } from '@/app/Context/AuthContext';
+import React, { useContext, useState } from 'react'
 
-const Comment = ({ ele, handleCommentDelete, AuthData,post }) => {
+const Comment = ({ ele, handleCommentDelete }) => {
   const [showCard, setShowCard] = useState(false);
+  const { AuthData } = useContext(AuthContext);
 
   const CardModel = ({ setShowCard, handleCommentDelete }) => {
     return (
@@ -21,7 +23,7 @@ const Comment = ({ ele, handleCommentDelete, AuthData,post }) => {
     <div className='card p-2 mb-3'>
       <div className='d-flex justify-content-between fw-bold mb-1 lead ml-2' style={{ fontSize: "13px" }}> {ele?.creator}
         {
-          AuthData?.userId === post?.creator
+          AuthData?.userId === ele?.creator
             ?
             <svg xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -34,7 +36,7 @@ const Comment = ({ ele, handleCommentDelete, AuthData,post }) => {
                 setShowCard(prev => !prev)
               }}>
               <path d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0m0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-            </svg>:""
+            </svg> : ""
         }
       </div>
       {ele?.text}
